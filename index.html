@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <!--=============== FAVICON ===============-->
+   <link rel="shortcut icon" href="assets/img/favicon-display.png" type="image/x-icon">
+
+   <!--=============== REMIXICONS ===============-->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.1.0/remixicon.min.css">
+
+   <!--=============== FONTAWESOME ===============-->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+   <!--=============== CSS ===============-->
+   <link rel="stylesheet" href="assets/css/styles.css">
+   <link rel="stylesheet" href="assets/css/icomoon.css">
+
+   <title>Display Importador</title>
+</head>
+
+<body>
+   <!--==================== MODAL GEO ====================-->
+   <!-- Location Selection Modal -->
+   <div class="modal__overlay" id="locationModal">
+      <div class="modal__overlay__bg"></div>
+
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+         <div class="modal__dialog__header">
+            <div class="modal__dialog__icon">
+               <i class="fa-solid fa-map-marker-alt"></i>
+            </div>
+            <h2 class="modal__dialog__title" id="modalTitle">¿Desde dónde nos visitas?</h2>
+            <p class="modal__dialog__subtitle">Selecciona tu ubicación para continuar</p>
+         </div>
+
+         <div class="modal__dialog__body" id="modalBody">
+            <!-- Loading State -->
+            <div class="modal__loading" id="loadingState" style="display: none;">
+               <div class="modal__spinner"></div>
+               <p class="modal__loading__text">Detectando tu ubicación...</p>
+            </div>
+
+            <!-- Location Buttons -->
+            <div class="modal__location__buttons" id="locationButtons">
+               <button class="modal__location__btn modal__location__btn__primary" id="detectLocationBtn">
+                  <i class="fa-solid fa-location-crosshairs"></i>
+                  <span>Detectar mi ubicación</span>
+               </button>
+
+               <div class="modal__divider">
+                  <span>O selecciona manualmente</span>
+               </div>
+
+               <button class="modal__location__btn" data-city="La Paz">
+                  <span>La Paz</span>
+               </button>
+
+               <button class="modal__location__btn" data-city="Cochabamba">
+                  <span>Cochabamba</span>
+               </button>
+
+               <button class="modal__location__btn" data-city="Santa Cruz">
+                  <span>Santa Cruz</span>
+               </button>
+            </div>
+
+            <!-- Alert Messages -->
+            <div id="alertContainer"></div>
+         </div>
+      </div>
+   </div>
+
+   <!--==================== MODAL CONTACTOS ====================-->
+   <div class="modal__overlay" id="contactModal">
+      <div class="modal__overlay__bg"></div>
+
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+         <div class="modal__dialog__header">
+            <div class="modal__dialog__icon">
+               <i class="fa-solid fa-address-book"></i>
+            </div>
+            <h2 class="modal__dialog__title" id="contactModalTitle">Contactos <span id="contactCityName"></span></h2>
+            <p class="modal__dialog__subtitle">Elige tu canal de comunicación preferido</p>
+         </div>
+
+         <div class="modal__dialog__body" id="contact-1">
+            <div class="modal__contact__buttons">
+               <a href="https://wa.me/59169645074?text=Hola%20quiero%20más%20información" target="_blank"
+                  class="modal__contact__btn modal__contact__btn__whatsapp">
+                  <i class="fa-brands fa-whatsapp"></i>
+                  <span class="modal__contact__btn__label">WhatsApp</span>
+               </a>
+               <a href="mailto:ventas.lpz@displayimportador.com" target="_blank"
+                  class="modal__contact__btn modal__contact__btn__email">
+                  <i class="fa-solid fa-envelope"></i>
+                  <span class="modal__contact__btn__label">Correo</span>
+               </a>
+               <a href="https://t.me/display_sistemas" target="_blank"
+                  class="modal__contact__btn modal__contact__btn__telegram">
+                  <i class="fa-brands fa-telegram"></i>
+                  <span class="modal__contact__btn__label">Telegram</span>
+               </a>
+               <a href="https://m.me/DISPLAYIMPORTADOR" target="_blank"
+                  class="modal__contact__btn modal__contact__btn__messenger">
+                  <i class="fa-brands fa-facebook-messenger"></i>
+                  <span class="modal__contact__btn__label">Messenger</span>
+               </a>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!--==================== HEADER ====================-->
+   <header class="header" id="header">
+      <nav class="nav container">
+         <a href="#" class="nav__logo">
+            <i class="icon-display-logo-main"></i> Display
+         </a>
+
+         <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+               <li>
+                  <a href="#display-home" class="nav__link active-link">Inicio</a>
+               </li>
+               <li>
+                  <a href="#display-brands" class="nav__link">Marcas</a>
+               </li>
+               <li>
+                  <a href="#display-products" class="nav__link">Productos</a>
+               </li>
+               <li>
+                  <a href="#display-location" class="nav__link">Ubicación</a>
+               </li>
+               <li>
+                  <a href="#display-contact" class="nav__link">Contacto</a>
+               </li>
+            </ul>
+
+            <!-- Close button -->
+            <div class="nav__close" id="nav-close">
+               <i class="ri-close-line"></i>
+            </div>
+         </div>
+
+         <div class="nav__actions">
+            <!-- <i class="ri-shopping-cart-line"></i> -->
+
+            <!-- Toggle Button -->
+            <div class="nav__toggle" id="nav-toggle">
+               <i class="ri-menu-line"></i>
+            </div>
+         </div>
+      </nav>
+   </header>
+
+   <!--==================== MAIN ====================-->
+   <main class="main">
+      <!--==================== HOME ====================-->
+      <section class="home section" id="display-home">
+         <div class="home__container container grid">
+            <img src="assets/img/home-laptops.png" alt="image" class="home__img">
+
+            <div class="home__data">
+               <h1 class="home__title">
+                  <span>COMPUTADORAS</span> <br>
+                  PARA CADA <br>
+                  NECESIDAD
+               </h1>
+
+               <p class="home__description">
+                  Soluciones tecnológicas confiables y
+                  modernas, creadas para empresas y usuarios
+                  que buscan rendimiento, diseño y soporte
+                  garantizado.
+               </p>
+
+               <div class="home__buttons">
+                  <a href="#" class="button" id="openContactModal">
+                     <span>
+                        <i class="icon-display-logo-main"></i>
+                     </span>
+                     CONTÁCTANOS
+                  </a>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <!--==================== BRANDS ====================-->
+      <section class="new section brands" id="display-brands">
+         <div class="brands__container container">
+            <!-- Tarjeta de vidrio con la frase -->
+            <div class="brands__quote">
+               <div class="brands__quote__header">
+                  <i class="icon-display-logo-main brands__quote__icon"></i>
+               </div>
+               <p class="brands__quote__text">
+                  Trabajamos con las <span class="brands__quote__highlight">marcas más prestigiosas</span> del
+                  mercado,
+                  garantizando calidad y excelencia en cada producto:
+               </p>
+            </div>
+
+            <!-- Carrusel infinito de marcas -->
+            <div class="brands__carousel">
+               <div class="brands__wrapper">
+                  <!-- Primer conjunto de marcas -->
+                  <div class="brands__card">
+                     <img src="assets/img/brand-1.png" alt="Marca 1">
+                  </div>
+                  <div class="brands__card">
+                     <img src="assets/img/brand-2.png" alt="Marca 2">
+                  </div>
+                  <div class="brands__card">
+                     <img src="assets/img/brand-3.png" alt="Marca 3">
+                  </div>
+                  <div class="brands__card">
+                     <img src="assets/img/brand-4.png" alt="Marca 4">
+                  </div>
+                  <div class="brands__card">
+                     <img src="assets/img/brand-5.png" alt="Marca 5">
+                  </div>
+                  <div class="brands__card">
+                     <img src="assets/img/brand-6.png" alt="Marca 6">
+                  </div>
+
+                  <!-- Segundo conjunto (duplicado para efecto infinito) -->
+                  <div class="brands__card">
+                     <img src="assets/img/brand-1.png" alt="Marca 1">
+                  </div>
+                  <div class="brands__card">
+                     <img src="assets/img/brand-2.png" alt="Marca 2">
+                  </div>
+                  <div class="brands__card">
+                     <img src="assets/img/brand-3.png" alt="Marca 3">
+                  </div>
+                  <div class="brands__card">
+                     <img src="assets/img/brand-4.png" alt="Marca 4">
+                  </div>
+                  <div class="brands__card">
+                     <img src="assets/img/brand-5.png" alt="Marca 5">
+                  </div>
+                  <div class="brands__card">
+                     <img src="assets/img/brand-6.png" alt="Marca 6">
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <!--==================== PRODUCTS ====================-->
+      <section class="shop section" id="display-products">
+         <div class="carousel__main">
+            <ul class="carousel__slider">
+               <li class="carousel__item"
+                  style="background-image: url('https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=100')">
+                  <div class="carousel__content">
+                     <span class="carousel__content__category">Ultrabook Premium</span>
+                     <h2 class="carousel__content__title">Dell XPS 13</h2>
+                     <p class="carousel__content__description">
+                        Experiencia premium en diseño ultradelgado. Procesador Intel de última generación, pantalla
+                        InfinityEdge y rendimiento excepcional para profesionales.
+                     </p>
+                     <div class="carousel__content__specs">
+                        <span class="carousel__content__spec">
+                           <i class="ri-cpu-line"></i>
+                           Intel i7 13va Gen
+                        </span>
+                        <span class="carousel__content__spec">
+                           <i class="ri-hard-drive-3-line"></i>
+                           512GB SSD
+                        </span>
+                        <span class="carousel__content__spec">
+                           <i class="ri-dashboard-3-line"></i>
+                           16GB RAM
+                        </span>
+                     </div>
+                  </div>
+               </li>
+               <li class="carousel__item"
+                  style="background-image: url('https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100')">
+                  <div class="carousel__content">
+                     <span class="carousel__content__category">Gaming Powerhouse</span>
+                     <h2 class="carousel__content__title">ASUS ROG Strix</h2>
+                     <p class="carousel__content__description">
+                        Potencia extrema para gaming y creación de contenido. GPU dedicada RTX, refrigeración avanzada y
+                        pantalla de alta frecuencia de actualización.
+                     </p>
+                     <div class="carousel__content__specs">
+                        <span class="carousel__content__spec">
+                           <i class="ri-gamepad-line"></i>
+                           RTX 4070
+                        </span>
+                        <span class="carousel__content__spec">
+                           <i class="ri-tv-line"></i>
+                           165Hz Display
+                        </span>
+                        <span class="carousel__content__spec">
+                           <i class="ri-flashlight-line"></i>
+                           RGB Lighting
+                        </span>
+                     </div>
+                  </div>
+               </li>
+               <li class="carousel__item"
+                  style="background-image: url('https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2064&q=100')">
+                  <div class="carousel__content">
+                     <span class="carousel__content__category">Workstation Pro</span>
+                     <h2 class="carousel__content__title">HP ZBook Studio</h2>
+                     <p class="carousel__content__description">
+                        Diseñada para profesionales creativos. Certificación ISV, gráficos NVIDIA Quadro y construcción
+                        de
+                        grado militar para máxima durabilidad.
+                     </p>
+                     <div class="carousel__content__specs">
+                        <span class="carousel__content__spec">
+                           <i class="ri-brush-line"></i>
+                           Pantalla 4K
+                        </span>
+                        <span class="carousel__content__spec">
+                           <i class="ri-shield-check-line"></i>
+                           MIL-STD Certified
+                        </span>
+                        <span class="carousel__content__spec">
+                           <i class="ri-palette-line"></i>
+                           100% DCI-P3
+                        </span>
+                     </div>
+                  </div>
+               </li>
+               <li class="carousel__item"
+                  style="background-image: url('https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100')">
+                  <div class="carousel__content">
+                     <span class="carousel__content__category">Business Elite</span>
+                     <h2 class="carousel__content__title">Lenovo ThinkPad X1</h2>
+                     <p class="carousel__content__description">
+                        Confiabilidad legendaria para empresas. Seguridad de nivel empresarial, batería de larga
+                        duración y
+                        teclado icónico para máxima productividad.
+                     </p>
+                     <div class="carousel__content__specs">
+                        <span class="carousel__content__spec">
+                           <i class="ri-time-line"></i>
+                           20hrs Batería
+                        </span>
+                        <span class="carousel__content__spec">
+                           <i class="ri-fingerprint-line"></i>
+                           Biometric Security
+                        </span>
+                        <span class="carousel__content__spec">
+                           <i class="ri-earth-line"></i>
+                           5G Ready
+                        </span>
+                     </div>
+                  </div>
+               </li>
+               <li class="carousel__item"
+                  style="background-image: url('https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=100')">
+                  <div class="carousel__content">
+                     <span class="carousel__content__category">Creator's Choice</span>
+                     <h2 class="carousel__content__title">MacBook Pro M3</h2>
+                     <p class="carousel__content__description">
+                        Chip M3 revolucionario con arquitectura ARM. Rendimiento sin precedentes, eficiencia energética
+                        superior y ecosistema Apple integrado.
+                     </p>
+                     <div class="carousel__content__specs">
+                        <span class="carousel__content__spec">
+                           <i class="ri-apple-line"></i>
+                           Apple M3 Pro
+                        </span>
+                        <span class="carousel__content__spec">
+                           <i class="ri-battery-charge-line"></i>
+                           22hrs Batería
+                        </span>
+                        <span class="carousel__content__spec">
+                           <i class="ri-mac-line"></i>
+                           macOS Sonoma
+                        </span>
+                     </div>
+                  </div>
+               </li>
+               <li class="carousel__item"
+                  style="background-image: url('https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')">
+                  <div class="carousel__content">
+                     <span class="carousel__content__category">Budget Performance</span>
+                     <h2 class="carousel__content__title">Acer Aspire 5</h2>
+                     <p class="carousel__content__description">
+                        Equilibrio perfecto entre precio y rendimiento. Ideal para estudiantes y uso diario, con
+                        especificaciones modernas y diseño elegante.
+                     </p>
+                     <div class="carousel__content__specs">
+                        <span class="carousel__content__spec">
+                           <i class="ri-price-tag-3-line"></i>
+                           Best Value
+                        </span>
+                        <span class="carousel__content__spec">
+                           <i class="ri-graduation-cap-line"></i>
+                           Student Friendly
+                        </span>
+                        <span class="carousel__content__spec">
+                           <i class="ri-chat-smile-3-line"></i>
+                           All-Day Use
+                        </span>
+                     </div>
+                  </div>
+               </li>
+            </ul>
+
+            <nav class="carousel__nav">
+               <button class="carousel__btn carousel__prev" aria-label="Previous">
+                  <i class="ri-arrow-left-s-line"></i>
+               </button>
+               <button class="carousel__btn carousel__next" aria-label="Next">
+                  <i class="ri-arrow-right-s-line"></i>
+               </button>
+            </nav>
+
+            <div class="carousel__progress">
+               <span class="carousel__progress__dot active"></span>
+               <span class="carousel__progress__dot"></span>
+               <span class="carousel__progress__dot"></span>
+               <span class="carousel__progress__dot"></span>
+               <span class="carousel__progress__dot"></span>
+               <span class="carousel__progress__dot"></span>
+            </div>
+         </div>
+      </section>
+
+      <!--==================== LOCATION ====================-->
+      <section class="care section" id="display-location">
+         <h2 class="section__title">
+            ¿DÓNDE ESTAMOS?
+         </h2>
+         <div class="location__card">
+            <!-- Panel de Información -->
+            <div class="location__info">
+               <div class="location__header">
+                  <div class="location__icon__wrapper">
+                     <i class="ri-map-pin-2-fill"></i>
+                  </div>
+                  <div class="location__header__text" id="location-1">
+                     <h2>Nuestra Ubicación</h2>
+                     <p>Encuéntranos en La Paz, Bolivia</p>
+                  </div>
+               </div>
+
+               <div class="location__details">
+                  <!-- Dirección -->
+                  <div class="location__detail" id="location-2">
+                     <div class="location__detail__icon">
+                        <i class="ri-map-pin-line"></i>
+                     </div>
+                     <div class="location__detail__content">
+                        <div class="location__detail__label">Dirección</div>
+                        <p class="location__detail__value">
+                           <strong>Calle Calatayud N° 660</strong><br>
+                           Zona Max Paredes, La Paz<br>
+                           Bolivia
+                        </p>
+                     </div>
+                  </div>
+
+                  <!-- Teléfono -->
+                  <div class="location__detail" id="phone-1">
+                     <div class="location__detail__icon">
+                        <i class="ri-phone-line"></i>
+                     </div>
+                     <div class="location__detail__content">
+                        <div class="location__detail__label">Teléfono</div>
+                        <p class="location__detail__value">
+                           <strong>+591 69645074</strong><br>
+                           Atención al cliente
+                        </p>
+                     </div>
+                  </div>
+
+                  <!-- Horarios -->
+                  <div class="location__detail">
+                     <div class="location__detail__icon">
+                        <i class="ri-time-line"></i>
+                     </div>
+                     <div class="location__detail__content">
+                        <div class="location__detail__label">Horarios de atención</div>
+                        <div class="location__schedule">
+                           <div class="location__schedule__item today">
+                              <span class="location__schedule__day">Lun - Vie</span>
+                              <span class="location__schedule__time">8:30 - 19:00</span>
+                           </div>
+                           <div class="location__schedule__item">
+                              <span class="location__schedule__day">Sábados</span>
+                              <span class="location__schedule__time">9:00 - 13:00</span>
+                           </div>
+                           <div class="location__schedule__item">
+                              <span class="location__schedule__day">Domingos</span>
+                              <span class="location__schedule__time">Cerrado</span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+                  <!-- Email -->
+                  <div class="location__detail" id="email-1">
+                     <div class="location__detail__icon">
+                        <i class="ri-mail-line"></i>
+                     </div>
+                     <div class="location__detail__content">
+                        <div class="location__detail__label">Correo electrónico</div>
+                        <p class="location__detail__value">
+                           <strong>ventas.lpz@displayimportador.com</strong>
+                        </p>
+                     </div>
+                  </div>
+               </div>
+
+               <!-- Botones de acción -->
+               <div class="location__actions" id="actions-1">
+                  <a href="https://www.google.com/maps/dir//Display+Importadora/@-16.494505,-68.1482199,19z"
+                     target="_blank" class="location__btn primary">
+                     <i class="ri-navigation-line"></i>
+                     <span>Cómo llegar</span>
+                  </a>
+                  <a href="https://wa.me/59169645074?text=Hola%2C%20quisiera%20información%20sobre%20sus%20productos"
+                     target="_blank" class="location__btn">
+                     <i class="ri-whatsapp-line"></i>
+                     <span>Escribir por WhatsApp</span>
+                  </a>
+               </div>
+            </div>
+
+            <!-- Panel del Mapa -->
+            <div class="location__map" id="map-1">
+               <!-- Badge de estado -->
+               <div class="location__status open" id="storeStatus">
+                  <span class="location__status__dot"></span>
+                  <span id="statusText">Abierto ahora</span>
+               </div>
+
+               <!-- Mapa de Google -->
+               <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d956.4062993687432!2d-68.14821996323994!3d-16.494505333953363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x915edf8b6ec0d459%3A0x948482aea6eedef9!2sDisplay%20Importadora!5e0!3m2!1ses!2sbo!4v1768490527142!5m2!1ses!2sbo"
+                  allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+               </iframe>
+            </div>
+         </div>
+      </section>
+
+      <!--==================== CONTACT ====================-->
+      <section class="contact section" id="display-contact">
+         <h2 class="section__title">
+            ¿QUIERES UNA COMPUTADORA? <br> CONTÁCTANOS
+         </h2>
+
+         <div class="contact__container container grid">
+            <img src="assets/img/contact-laptop.png" alt="image" class="contact__img">
+
+            <div class="contact__content">
+               <div id="contact-2">
+                  <h3 class="contact__title">Escríbenos</h3>
+
+                  <div class="contact__social">
+                     <a href="#" target="_blank">
+                        <i class="ri-whatsapp-fill"></i>
+                     </a>
+                     <a href="#" target="_blank">
+                        <i class="ri-telegram-fill"></i>
+                     </a>
+                     <a href="#" target="_blank">
+                        <i class="ri-mail-fill"></i>
+                     </a>
+                     <a href="#" target="_blank">
+                        <i class="ri-messenger-fill"></i>
+                     </a>
+                  </div>
+               </div>
+
+               <div id="phone-2">
+                  <h3 class="contact__title">Llámanos</h3>
+
+                  <address class="contact__info">
+                     +00-987-6745-121
+                     +11-123421
+                  </address>
+               </div>
+
+               <div id="location-3">
+                  <h3 class="contact__title">Encuéntranos aquí</h3>
+
+                  <address class="contact__info">
+                     Calatayud #660 <br>
+                     Zona Central, La Paz
+                     Bolivia
+                  </address>
+               </div>
+            </div>
+         </div>
+      </section>
+   </main>
+
+   <!--==================== FOOTER ====================-->
+   <footer class="footer">
+      <div class="footer__container container grid">
+         <div>
+            <a href="#" class="footer__logo">
+               <i class="icon-display-logo-main"></i>Display
+            </a>
+
+            <p class="footer__description">
+               Computadoras para <br> cada necesidad.
+            </p>
+         </div>
+
+         <div class="footer__content grid">
+            <div>
+               <h3 class="footer__title">INFORMACIÓN</h3>
+
+               <ul class="footer__links">
+                  <li>
+                     <a href="#display-brands" class="footer__link">Marcas</a>
+                  </li>
+                  <li>
+                     <a href="#display-products" class="footer__link">Productos</a>
+                  </li>
+                  <li>
+                     <a href="#display-location" class="footer__link">Ubicación</a>
+                  </li>
+                  <li>
+                     <a href="#display-contact" class="footer__link">Contacto</a>
+                  </li>
+               </ul>
+            </div>
+
+            <div>
+               <h3 class="footer__title">REDES SOCIALES</h3>
+
+               <div class="footer__social">
+                  <a href="https://www.tiktok.com/@display_im" target="_blank" class="footer__social-link">
+                     <i class="ri-tiktok-fill"></i>
+                  </a>
+                  <a href="https://www.facebook.com/DISPLAYIMPORTADORA" target="_blank" class="footer__social-link">
+                     <i class="ri-facebook-circle-fill"></i>
+                  </a>
+                  <a href="https://www.instagram.com/display_importador" target="_blank" class="footer__social-link">
+                     <i class="ri-instagram-fill"></i>
+                  </a>
+                  <a href="https://x.com/Display_Imp" target="_blank" class="footer__social-link">
+                     <i class="ri-twitter-x-line"></i>
+                  </a>
+               </div>
+            </div>
+         </div>
+      </div>
+      <span class="footer__copy">
+         &#169; Todos los derechos reservado por Display Importador.
+      </span>
+   </footer>
+
+   <!--========== SCROLL UP ==========-->
+   <a href="#" class="scrollup" id="scroll-up">
+      <i class="ri-map-pin-2-fill"></i>
+   </a>
+
+   <!--========== CUSTOM ==========-->
+   <script src="assets/js/location-data.js"></script>
+   <script src="assets/js/geo.js"></script>
+   <script src="assets/js/modal-contact.js"></script>
+
+   <!--=============== SCROLLREVEAL ===============-->
+   <script src="assets/js/scrollreveal.min.js"></script>
+
+   <!--=============== MAIN JS ===============-->
+   <script src="assets/js/main.js"></script>
+</body>
+
+</html>
